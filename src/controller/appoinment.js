@@ -14,7 +14,7 @@ const AppoinmentPost = async (req, res) => {
             subject,
         });
         await newApplicant.save();
-        return res.status(201).json(newApplicant);
+        return res.status(201).json({ data: newApplicant });
     } catch (error) {
         console.error("Error creating applicant:", error);
         return res.status(500).json({ message: "Internal server error" });

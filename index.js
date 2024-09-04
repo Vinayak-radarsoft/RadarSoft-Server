@@ -6,6 +6,7 @@ const cors = require("cors");
 const fileUpload = require("express-fileupload");
 const appoinmentRoute = require("./src/routes/appoinment");
 const careerRoute = require("./src/routes/career");
+const contactRoute = require("./src/routes/contact");
 
 const app = express();
 app.use(cors());
@@ -21,6 +22,7 @@ app.use(
 //api endpoint
 app.use("/api", appoinmentRoute);
 app.use("/api", careerRoute);
+app.use("/api", contactRoute);
 
 // get port from env else default to 5000
 const PORT = process.env.PORT || 8080;
