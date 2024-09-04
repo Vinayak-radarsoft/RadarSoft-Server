@@ -3,17 +3,27 @@ const uploadFile = require("../utils/file");
 
 const createCareer = async (req, res) => {
     try {
-        const { name,jobTitle, phoneNumber, email, currentCTC, expectedCTC } = req.body;
+        const { name, jobTitle, phoneNumber, email, currentCTC, expectedCTC } =
+            req.body;
         const resume = req.files ? req.files.resume : null;
         console.log("req.body", req.body, resume);
         let resumeURL = "";
         if (resume) {
-            if (resume.mimetype.startsWith("image/")) {
-                resumeURL = await uploadFile(resume, resume.data);
-            } else if (resume.mimetype === "application/pdf") {
+            const mimeType = resume.mimetype;
+            const supportedImageTypes = ["image/jpeg", "image/png", "image/gif"];
+            const supportedDocumentTypes = [
+                "application/pdf",
+                "application/msword",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            ];
+
+            if (
+                supportedImageTypes.includes(mimeType) ||
+                supportedDocumentTypes.includes(mimeType)
+            ) {
                 resumeURL = await uploadFile(resume, resume.data);
             } else {
-                console.log(`Unsupported file type: ${resume.mimetype}`);
+                console.log(`Unsupported file type: ${mimeType}`);
                 return res.status(400).json({ message: "Unsupported file type." });
             }
         }
