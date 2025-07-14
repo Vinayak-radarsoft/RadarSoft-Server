@@ -5,7 +5,7 @@ const ContactPost = async (req, res) => {
         const { name, phoneNumber, email, country, message } = req.body;
         const newContact = new ContactModel({
             name,
-            phoneNumber,
+            phoneNumber: req.body?.phone,
             email,
             country,
             message,
